@@ -72,10 +72,7 @@ function Login() {
   const navigate = useNavigate();
 
   async function onLogin(data: FieldValues) {
-    await pb.collection('users').authWithPassword(
-        data.email,
-        data.password,
-    );
+    await pb.collection("users").authWithPassword(data.email, data.password);
     navigate(0);
   }
 

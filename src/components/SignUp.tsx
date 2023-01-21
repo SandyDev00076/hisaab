@@ -60,8 +60,8 @@ function SignUp() {
 
   async function signItUp(data: FieldValues) {
     try {
-      const userCreationData = await pb.collection("users").create(data);
-      // store this data in redux/context
+      await pb.collection("users").create(data);
+      // user has been successfully created
       navigate("/");
     } catch (e: any) {
       console.log("error", e.data);
