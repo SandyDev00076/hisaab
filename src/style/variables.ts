@@ -3,9 +3,10 @@ export const Colors = {
     secondaryText: "#bbb",
     bg: "#0F2027",
     bgLight5: "#275264",
-    action: "#8075FF",
-    actionTint: "#7064FF",
-    actionLight4: "#BFB9FF"
+    action: "#435279",
+    actionTint: "#3d4b6e",
+    actionLight12: "#b3bcd5",
+    actionLight11: "#a8b3cf"
 }
 
 export const Sizes = {

@@ -26,6 +26,7 @@ export const Button = styled.button`
   outline: none;
   width: 100%;
   border-radius: 10px;
+  background: none;
   font-size: ${Sizes.medium};
   cursor: pointer;
 `;
@@ -38,10 +39,10 @@ export const PrimaryButton = styled(Button)`
   }
 `;
 export const SecondaryButton = styled(Button)`
-  border: 1px solid ${Colors.action};
-  color: ${Colors.action};
+  border: 1px solid ${Colors.actionLight12};
+  color: ${Colors.text};
   &:hover {
-    border-color: ${Colors.actionTint};
-    color: ${Colors.actionTint};
+    border-color: ${Colors.actionLight11};
+    color: ${Colors.secondaryText};
   }
 `;

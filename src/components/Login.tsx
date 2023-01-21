@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Container, Input, PrimaryButton } from "../style/shared";
+import { Container, Input, PrimaryButton, SecondaryButton } from "../style/shared";
 import { Colors, Sizes } from "../style/variables";
 import Field from "./Field";
 
@@ -25,7 +25,7 @@ const Filler = styled.div`
 `;
 
 const LoginForm = styled.form`
-  padding: 16px;
+  padding: 32px;
   width: 100%;
   background-color: ${Colors.bg};
   color: ${Colors.text};
@@ -33,20 +33,31 @@ const LoginForm = styled.form`
 `;
 
 const LoginInput = styled(Input)`
-    font-size: ${Sizes.large};
-`
+  font-size: ${Sizes.large};
+`;
 
 const LoginField = styled(Field)`
-    display: block;
-    margin-bottom: 16px;
-`
+  display: block;
+  margin-bottom: 16px;
+`;
 
 const ForgotPassword = styled.a`
-    font-size: ${Sizes.small};
-    display: block;
-    text-align: center;
-    margin-bottom: 16px;
-`
+  font-size: ${Sizes.small};
+  display: block;
+  text-align: center;
+  margin-bottom: 16px;
+`;
+
+const Footer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  & > span {
+    color: ${Colors.text};
+    margin-bottom: 10px;
+  }
+`;
 
 function Login() {
   return (
@@ -55,18 +66,19 @@ function Login() {
       <Intro>Track and calculate your monthly expenses</Intro>
       <LoginForm>
         <LoginField label="Email">
-            <LoginInput type={"email"} />
+          <LoginInput type={"email"} />
         </LoginField>
         <LoginField label="Password">
-            <LoginInput type={"password"} />
+          <LoginInput type={"password"} />
         </LoginField>
-        <ForgotPassword href="/">
-            Forgot password ?
-        </ForgotPassword>
-        <PrimaryButton>
-            Login
-        </PrimaryButton>
+        <ForgotPassword href="/">Forgot password ?</ForgotPassword>
+        <PrimaryButton>Login</PrimaryButton>
       </LoginForm>
+      <Filler />
+      <Footer>
+        <span>Don't have an account?</span>
+        <SecondaryButton>Sign Up</SecondaryButton>
+      </Footer>
     </LoginContainer>
   );
 }
