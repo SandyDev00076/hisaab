@@ -37,6 +37,11 @@ export const Button = styled.button`
   background: none;
   font-size: ${Sizes.medium};
   cursor: pointer;
+
+  &:disabled {
+    filter: brightness(0.5);
+    cursor: default;
+  }
 `;
 
 export const PrimaryButton = styled(Button)`

@@ -6,7 +6,8 @@ export const Colors = {
     action: "#435279",
     actionTint: "#3d4b6e",
     actionLight12: "#b3bcd5",
-    actionLight11: "#a8b3cf"
+    actionLight11: "#a8b3cf",
+    danger: "#EE4B2B"
 }
 
 export const Sizes = {
