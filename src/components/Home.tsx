@@ -2,7 +2,13 @@ import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import pb from "../lib/pocketbase";
-import { Container, Filler, Greeting, PrimaryButton } from "../style/shared";
+import {
+  Container,
+  DangerButton,
+  Filler,
+  Greeting,
+  PrimaryButton,
+} from "../style/shared";
 import { Colors, Sizes } from "../style/variables";
 import type { SetsRecord } from "../types/pocketbase-types";
 
@@ -26,15 +32,40 @@ const Expense = styled.h1`
 `;
 
 const ListContainer = styled.section`
+  width: 100%;
   & > h3 {
     color: ${Colors.text};
     font-size: ${Sizes.medium};
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    text-align: center;
   }
 `;
 
-const List = styled.ul`
-  list-style: none;
+const List = styled.div`
+  width: 100%;
+`;
+
+const SetItem = styled.button`
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  font-size: ${Sizes.medium};
+  background-color: transparent;
+  width: 100%;
+  border: 0.5px solid ${Colors.action};
+  border-radius: 10px;
+  outline: none;
+  margin-bottom: 10px;
+
+  & .name {
+    color: ${Colors.text};
+  }
+
+  & .expense {
+    color: ${Colors.accent};
+  }
 `;
 
 function Home() {
@@ -77,10 +108,19 @@ function Home() {
         <h3>
           {sets.length} {sets.length === 1 ? "set" : "sets"}
         </h3>
-        {sets.length > 0 && <List></List>}
+        {sets.length > 0 && (
+          <List>
+            {sets.map((set) => (
+              <SetItem>
+                <div className="name">{set.name}</div>
+                <div className="expense">{set.expense}</div>
+              </SetItem>
+            ))}
+          </List>
+        )}
       </ListContainer>
       <Filler />
-      <PrimaryButton onClick={logout}>Logout</PrimaryButton>
+      <DangerButton onClick={logout}>Logout</DangerButton>
     </HomeContainer>
   );
 }

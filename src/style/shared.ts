@@ -38,6 +38,10 @@ export const Button = styled.button`
   font-size: ${Sizes.medium};
   cursor: pointer;
 
+  &:hover {
+    filter: brightness(0.9);
+  }
+
   &:disabled {
     filter: brightness(0.5);
     cursor: default;
@@ -47,18 +51,16 @@ export const Button = styled.button`
 export const PrimaryButton = styled(Button)`
   background-color: ${Colors.action};
   color: ${Colors.text};
-  &:hover {
-    background-color: ${Colors.actionTint};
-  }
 `;
 
 export const SecondaryButton = styled(Button)`
   border: 1px solid ${Colors.actionLight12};
   color: ${Colors.text};
-  &:hover {
-    border-color: ${Colors.actionLight11};
-    color: ${Colors.secondaryText};
-  }
+`;
+
+export const DangerButton = styled(Button)`
+  background-color: ${Colors.danger};
+  color: ${Colors.text};
 `;
 
 export const Greeting = styled.h1`
