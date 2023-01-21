@@ -1,7 +1,13 @@
 import styled from "@emotion/styled";
-import { Container, Input, PrimaryButton, SecondaryButton } from "../style/shared";
+import {
+  Container,
+  Input,
+  PrimaryButton,
+  SecondaryButton,
+} from "../style/shared";
 import { Colors, Sizes } from "../style/variables";
 import Field from "./Field";
+import { FieldValues, useForm } from "react-hook-form";
 
 const LoginContainer = styled(Container)`
   gap: 64px;
@@ -60,23 +66,29 @@ const Footer = styled.div`
 `;
 
 function Login() {
+  const { register, handleSubmit } = useForm();
+
+  function onLogin(data: FieldValues) {
+    console.log(data);
+  }
+
   return (
     <LoginContainer>
       <Greeting>Hello</Greeting>
       <Intro>Track and calculate your monthly expenses</Intro>
-      <LoginForm>
+      <LoginForm onSubmit={handleSubmit(onLogin)}>
         <LoginField label="Email">
-          <LoginInput type={"email"} />
+          <LoginInput type={"email"} {...register("email")} />
         </LoginField>
         <LoginField label="Password">
-          <LoginInput type={"password"} />
+          <LoginInput type={"password"} {...register("password")} />
         </LoginField>
         <ForgotPassword href="/">Forgot password ?</ForgotPassword>
         <PrimaryButton>Login</PrimaryButton>
       </LoginForm>
       <Filler />
       <Footer>
-        <span>Don't have an account?</span>
+        <span>Don't have an account ?</span>
         <SecondaryButton>Sign Up</SecondaryButton>
       </Footer>
     </LoginContainer>
