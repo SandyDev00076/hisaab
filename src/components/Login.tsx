@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import {
   Container,
+  Filler,
   Form,
   Greeting,
   Input,
@@ -23,10 +24,6 @@ const Intro = styled.p`
   font-size: ${Sizes.large};
   color: ${Colors.text};
   text-align: center;
-`;
-
-const Filler = styled.div`
-  flex: 1;
 `;
 
 const LoginInput = styled(Input)`

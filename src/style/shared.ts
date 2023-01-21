@@ -67,3 +67,7 @@ export const Greeting = styled.h1`
   font-weight: normal;
   display: block;
 `;
+
+export const Filler = styled.div`
+  flex: 1;
+`;
