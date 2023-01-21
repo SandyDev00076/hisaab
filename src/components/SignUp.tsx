@@ -13,6 +13,7 @@ import Field from "./Field";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SignUpContainer = styled(Container)`
   gap: 32px;
@@ -55,11 +56,13 @@ function SignUp() {
   });
 
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   async function signItUp(data: FieldValues) {
     try {
       const userCreationData = await pb.collection("users").create(data);
       // store this data in redux/context
+      navigate("/");
     } catch (e: any) {
       console.log("error", e.data);
       if (e.data && e.data.data && e.data.data.passwordConfirm) {

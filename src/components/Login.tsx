@@ -11,6 +11,9 @@ import { Colors, Sizes } from "../style/variables";
 import Field from "./Field";
 import { FieldValues, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import pb from "../lib/pocketbase";
 
 const LoginContainer = styled(Container)`
   gap: 32px;
@@ -53,12 +56,27 @@ const Footer = styled.div`
   }
 `;
 
+const schema = yup.object({
+  email: yup.string().required(),
+  password: yup.string().required(),
+});
+
 function Login() {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { isValid },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   const navigate = useNavigate();
 
-  function onLogin(data: FieldValues) {
-    console.log(data);
+  async function onLogin(data: FieldValues) {
+    await pb.collection('users').authWithPassword(
+        data.email,
+        data.password,
+    );
+    navigate(0);
   }
 
   function goToSignUp() {
@@ -77,7 +95,7 @@ function Login() {
           <LoginInput type={"password"} {...register("password")} />
         </LoginField>
         <ForgotPassword href="/">Forgot password ?</ForgotPassword>
-        <PrimaryButton>Login</PrimaryButton>
+        <PrimaryButton disabled={!isValid}>Login</PrimaryButton>
       </Form>
       <Filler />
       <Footer>
