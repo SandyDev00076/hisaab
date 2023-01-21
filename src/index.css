@@ -38,3 +38,8 @@ button, input {
 *::before {
   box-sizing: border-box;
 }
+
+a[href] {
+  color: #89CFF0;
+  text-decoration-color: #89CFF0;
+}

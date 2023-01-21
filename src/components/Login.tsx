@@ -41,6 +41,13 @@ const LoginField = styled(Field)`
     margin-bottom: 16px;
 `
 
+const ForgotPassword = styled.a`
+    font-size: ${Sizes.small};
+    display: block;
+    text-align: center;
+    margin-bottom: 16px;
+`
+
 function Login() {
   return (
     <LoginContainer>
@@ -53,6 +60,9 @@ function Login() {
         <LoginField label="Password">
             <LoginInput type={"password"} />
         </LoginField>
+        <ForgotPassword href="/">
+            Forgot password ?
+        </ForgotPassword>
         <PrimaryButton>
             Login
         </PrimaryButton>
