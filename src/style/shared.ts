@@ -9,6 +9,14 @@ export const Container = styled.section`
   height: 100%;
 `;
 
+export const Form = styled.form`
+  padding: 32px;
+  width: 100%;
+  background-color: ${Colors.bg};
+  color: ${Colors.text};
+  border-radius: 10px;
+`;
+
 export const Input = styled.input`
   padding: 8px 10px;
   width: 100%;
@@ -38,6 +46,7 @@ export const PrimaryButton = styled(Button)`
     background-color: ${Colors.actionTint};
   }
 `;
+
 export const SecondaryButton = styled(Button)`
   border: 1px solid ${Colors.actionLight12};
   color: ${Colors.text};
@@ -45,4 +54,11 @@ export const SecondaryButton = styled(Button)`
     border-color: ${Colors.actionLight11};
     color: ${Colors.secondaryText};
   }
+`;
+
+export const Greeting = styled.h1`
+  font-size: ${Sizes.large};
+  color: ${Colors.secondaryText};
+  font-weight: normal;
+  display: block;
 `;

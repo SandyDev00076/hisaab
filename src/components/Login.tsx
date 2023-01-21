@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import {
   Container,
+  Form,
+  Greeting,
   Input,
   PrimaryButton,
   SecondaryButton,
@@ -8,16 +10,10 @@ import {
 import { Colors, Sizes } from "../style/variables";
 import Field from "./Field";
 import { FieldValues, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 const LoginContainer = styled(Container)`
   gap: 32px;
-`;
-
-const Greeting = styled.h1`
-  font-size: ${Sizes.large};
-  color: ${Colors.secondaryText};
-  font-weight: normal;
-  display: block;
 `;
 
 const Intro = styled.p`
@@ -30,13 +26,7 @@ const Filler = styled.div`
   flex: 1;
 `;
 
-const LoginForm = styled.form`
-  padding: 32px;
-  width: 100%;
-  background-color: ${Colors.bg};
-  color: ${Colors.text};
-  border-radius: 10px;
-`;
+const LoginForm = styled(Form)``;
 
 const LoginInput = styled(Input)`
   font-size: ${Sizes.large};
@@ -67,9 +57,14 @@ const Footer = styled.div`
 
 function Login() {
   const { register, handleSubmit } = useForm();
+  const navigate = useNavigate();
 
   function onLogin(data: FieldValues) {
     console.log(data);
+  }
+
+  function goToSignUp() {
+    navigate("signup");
   }
 
   return (
@@ -89,7 +84,7 @@ function Login() {
       <Filler />
       <Footer>
         <span>Don't have an account ?</span>
-        <SecondaryButton>Sign Up</SecondaryButton>
+        <SecondaryButton onClick={goToSignUp}>Sign Up</SecondaryButton>
       </Footer>
     </LoginContainer>
   );
