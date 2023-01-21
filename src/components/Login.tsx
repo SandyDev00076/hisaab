@@ -10,7 +10,7 @@ import Field from "./Field";
 import { FieldValues, useForm } from "react-hook-form";
 
 const LoginContainer = styled(Container)`
-  gap: 64px;
+  gap: 32px;
 `;
 
 const Greeting = styled.h1`
