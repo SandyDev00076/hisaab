@@ -1,5 +1,5 @@
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Sofia Sans', Helvetica, Arial, sans-serif;
   color-scheme: light dark;
 
   font-synthesis: none;
@@ -11,13 +11,30 @@
 
 body {
   margin: 0;
+  height: 100vh;
+  background: #0F2027;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to top, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to top, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 h1 {
-  font-size: 3.2em;
   line-height: 1.1;
+}
+
+p, h1, h2 {
+  margin: 0;
 }
 
 button, input {
   font-family: inherit;
+}
+
+#root {
+  height: 100%;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
 }
