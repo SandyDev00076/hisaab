@@ -10,6 +10,8 @@ export const Colors = {
 }
 
 export const Sizes = {
+    xxSmall: "12px",
+    xSmall: "14px",
     small: "16px",
     medium: "20px",
     large: "24px"

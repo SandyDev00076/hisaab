@@ -26,8 +26,6 @@ const Filler = styled.div`
   flex: 1;
 `;
 
-const LoginForm = styled(Form)``;
-
 const LoginInput = styled(Input)`
   font-size: ${Sizes.large};
 `;
@@ -71,7 +69,7 @@ function Login() {
     <LoginContainer>
       <Greeting>Hello</Greeting>
       <Intro>Track and calculate your monthly expenses</Intro>
-      <LoginForm onSubmit={handleSubmit(onLogin)}>
+      <Form onSubmit={handleSubmit(onLogin)}>
         <LoginField label="Email">
           <LoginInput type={"email"} {...register("email")} />
         </LoginField>
@@ -80,7 +78,7 @@ function Login() {
         </LoginField>
         <ForgotPassword href="/">Forgot password ?</ForgotPassword>
         <PrimaryButton>Login</PrimaryButton>
-      </LoginForm>
+      </Form>
       <Filler />
       <Footer>
         <span>Don't have an account ?</span>
