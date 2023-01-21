@@ -1,13 +1,18 @@
+import styled from "@emotion/styled";
 import { Container, Form, Greeting } from "../style/shared";
+
+const SignUpContainer = styled(Container)`
+    gap: 32px;
+`
 
 function SignUp() {
     return (
-        <Container>
+        <SignUpContainer>
             <Greeting>Join Us</Greeting>
             <Form>
-                
+
             </Form>
-        </Container>
+        </SignUpContainer>
     )
 }
 
