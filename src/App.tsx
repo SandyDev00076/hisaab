@@ -1,12 +1,10 @@
-import { useState } from "react"
 import Login from "./components/Login"
+import pb from "./lib/pocketbase";
 
 function App() {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  if (!pb.authStore.isValid) return <Login />;
   
-  if (!isLoggedIn) return <Login />;
-  
-  return <div></div>
+  return <div>User is logged in</div>
 }
 
 export default App
