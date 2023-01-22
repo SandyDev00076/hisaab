@@ -37,6 +37,11 @@ export const Button = styled.button`
   background: none;
   font-size: ${Sizes.medium};
   cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
 
   &:hover {
     filter: brightness(0.9);
@@ -49,18 +54,27 @@ export const Button = styled.button`
 `;
 
 export const PrimaryButton = styled(Button)`
-  background-color: ${Colors.action};
-  color: ${Colors.text};
+  background-color: ${Colors.bgLight25};
+  color: ${Colors.textInvert};
+  & > svg {
+    fill: ${Colors.textInvert};
+  }
 `;
 
 export const SecondaryButton = styled(Button)`
   border: 1px solid ${Colors.actionLight12};
   color: ${Colors.text};
+  & > svg {
+    fill: ${Colors.text};
+  }
 `;
 
 export const DangerButton = styled(Button)`
   background-color: ${Colors.danger};
   color: ${Colors.text};
+  & > svg {
+    fill: ${Colors.text};
+  }
 `;
 
 export const Greeting = styled.h1`
@@ -72,4 +86,17 @@ export const Greeting = styled.h1`
 
 export const Filler = styled.div`
   flex: 1;
+`;
+
+export const Tray = styled.footer`
+  width: 100vw;
+  padding: 32px;
+  background-color: rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  justify-content: space-between;
 `;

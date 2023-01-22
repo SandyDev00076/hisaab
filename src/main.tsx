@@ -4,6 +4,7 @@ import App from "./App";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./index.css";
 import SignUp from "./components/SignUp";
+import AddSet from "./components/AddSet";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
@@ -11,6 +12,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="signup" element={<SignUp />} />
+        <Route path="add" element={<AddSet />} />
       </Routes>
     </Router>
   </React.StrictMode>

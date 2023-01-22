@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import pb from "../lib/pocketbase";
 import {
@@ -8,27 +8,29 @@ import {
   Filler,
   Greeting,
   PrimaryButton,
+  Tray,
 } from "../style/shared";
 import { Colors, Sizes } from "../style/variables";
 import type { SetsRecord } from "../types/pocketbase-types";
+import { ReactComponent as LogoutIcon } from "../assets/logout.svg";
 
 const HomeContainer = styled(Container)`
   gap: 32px;
 `;
 
 const Info = styled.div`
-  text-align: center;
-
-  & > h3 {
-    color: ${Colors.text};
-    font-size: ${Sizes.medium};
-    margin-bottom: 5px;
+  & > h4 {
+    margin-bottom: 10px;
+    font-size: ${Sizes.xSmall};
+    color: ${Colors.secondaryText};
   }
-`;
+`
 
 const Expense = styled.h1`
   color: ${Colors.accent};
-  font-size: ${Sizes.xxLarge};
+  font-size: ${Sizes.xLarge};
+  flex: 1;
+  line-height: 0.7;
 `;
 
 const ListContainer = styled.section`
@@ -54,10 +56,14 @@ const SetItem = styled.button`
   font-size: ${Sizes.medium};
   background-color: transparent;
   width: 100%;
-  border: 0.5px solid ${Colors.action};
+  border: 1px solid ${Colors.bgLight25};
   border-radius: 10px;
   outline: none;
   margin-bottom: 10px;
+
+  &:hover {
+    border-color: ${Colors.white};
+  }
 
   & .name {
     color: ${Colors.text};
@@ -68,15 +74,37 @@ const SetItem = styled.button`
   }
 `;
 
+const EmptyUI = styled.div`
+  color: ${Colors.secondaryText};
+  font-size: ${Sizes.medium};
+  text-align: center;
+`;
+
+const AddButton = styled(PrimaryButton)`
+  flex: 0.6;
+`;
+
 function Home() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  const [totalExpense, setTotalExpense] = useState(0);
   const [sets, setSets] = useState<SetsRecord[]>([]);
 
   function logout() {
     pb.authStore.clear();
     navigate(0);
+  }
+
+  const totalExpense = useMemo(() => {
+    let total = 0;
+    sets.forEach((set) => {
+      if (!set.expense) return;
+      total += set.expense;
+    });
+    return total;
+  }, [sets]);
+
+  function addASet() {
+    navigate("add");
   }
 
   useEffect(() => {
@@ -100,27 +128,33 @@ function Home() {
   return (
     <HomeContainer>
       <Greeting>Hello {name}</Greeting>
-      <Info>
-        <h3>Total expense</h3>
-        <Expense>{totalExpense.toFixed(2)}/-</Expense>
-      </Info>
       <ListContainer>
         <h3>
           {sets.length} {sets.length === 1 ? "set" : "sets"}
         </h3>
-        {sets.length > 0 && (
+        {sets.length > 0 ? (
           <List>
             {sets.map((set) => (
               <SetItem>
                 <div className="name">{set.name}</div>
-                <div className="expense">{set.expense}</div>
+                <div className="expense">{set.expense?.toFixed(2)}</div>
               </SetItem>
             ))}
           </List>
+        ) : (
+          <EmptyUI>Add one to get started</EmptyUI>
         )}
       </ListContainer>
       <Filler />
-      <DangerButton onClick={logout}>Logout</DangerButton>
+      <Tray>
+        <Info>
+          <h4>Total</h4>
+          <Expense>{totalExpense.toFixed(2)}/-</Expense>
+        </Info>
+        <AddButton onClick={addASet}>
+          Add
+        </AddButton>
+      </Tray>
     </HomeContainer>
   );
 }
