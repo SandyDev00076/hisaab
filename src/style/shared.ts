@@ -91,7 +91,7 @@ export const Filler = styled.div`
 export const Tray = styled.footer`
   width: 100vw;
   padding: 32px;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.2);
   position: fixed;
   bottom: 0;
   left: 0;

@@ -57,6 +57,7 @@ function AddSet() {
             type={"text"}
             value={name}
             onChange={(e) => setName(e.target.value)}
+            autoFocus
           />
         </Field>
       </Form>
