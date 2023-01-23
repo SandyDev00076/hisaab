@@ -30,15 +30,23 @@ function AddSet() {
     navigate(-1);
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
   }
 
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Enter") {
+      // enter was pressed
+      addSet();
+    }
+  }
+
   async function addSet() {
+    if (!name || !pb.authStore.model) return;
     const data = {
       name,
       expense: 0,
-      userId: pb.authStore.model?.id,
+      userId: pb.authStore.model.id,
     };
     try {
       await pb.collection("sets").create(data);
@@ -57,6 +65,7 @@ function AddSet() {
             type={"text"}
             value={name}
             onChange={(e) => setName(e.target.value)}
+            onKeyDown={handleKeyDown}
             autoFocus
           />
         </Field>

@@ -24,7 +24,7 @@ const Info = styled.div`
     font-size: ${Sizes.xSmall};
     color: ${Colors.secondaryText};
   }
-`
+`;
 
 const Expense = styled.h1`
   color: ${Colors.accent};
@@ -84,6 +84,10 @@ const AddButton = styled(PrimaryButton)`
   flex: 0.6;
 `;
 
+const LogoutButton = styled(DangerButton)`
+  margin-bottom: 64px;
+`
+
 function Home() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
@@ -135,7 +139,7 @@ function Home() {
         {sets.length > 0 ? (
           <List>
             {sets.map((set) => (
-              <SetItem>
+              <SetItem key={set.name}>
                 <div className="name">{set.name}</div>
                 <div className="expense">{set.expense?.toFixed(2)}</div>
               </SetItem>
@@ -146,14 +150,13 @@ function Home() {
         )}
       </ListContainer>
       <Filler />
+      <LogoutButton onClick={logout}>Logout</LogoutButton>
       <Tray>
         <Info>
           <h4>Total</h4>
           <Expense>{totalExpense.toFixed(2)}/-</Expense>
         </Info>
-        <AddButton onClick={addASet}>
-          Add
-        </AddButton>
+        <AddButton onClick={addASet}>Add</AddButton>
       </Tray>
     </HomeContainer>
   );
