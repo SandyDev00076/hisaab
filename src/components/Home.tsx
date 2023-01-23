@@ -5,14 +5,12 @@ import pb from "../lib/pocketbase";
 import {
   Container,
   DangerButton,
-  Filler,
   Greeting,
   PrimaryButton,
   Tray,
 } from "../style/shared";
 import { Colors, Sizes } from "../style/variables";
 import type { SetsRecord } from "../types/pocketbase-types";
-import { ReactComponent as LogoutIcon } from "../assets/logout.svg";
 
 const HomeContainer = styled(Container)`
   gap: 32px;
@@ -149,7 +147,6 @@ function Home() {
           <EmptyUI>Add one to get started</EmptyUI>
         )}
       </ListContainer>
-      <Filler />
       <LogoutButton onClick={logout}>Logout</LogoutButton>
       <Tray>
         <Info>
