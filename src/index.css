@@ -60,3 +60,7 @@ a[href] {
   color: #89cff0;
   text-decoration-color: #89cff0;
 }
+
+.slideToLeft {
+  translate: -64px;
+}

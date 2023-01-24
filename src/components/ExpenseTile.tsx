@@ -1,0 +1,103 @@
+import styled from "@emotion/styled";
+import { LegacyRef, useEffect, useRef, useState } from "react";
+import pb from "../lib/pocketbase";
+import { Colors, Sizes } from "../style/variables";
+import { ExpensesResponse } from "../types/pocketbase-types";
+import { debounce } from "../utils";
+
+interface IProps {
+  expense: ExpensesResponse;
+  onUpdate: Function;
+}
+
+const ExpenseItem = styled.button`
+  background-color: ${Colors.bg};
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  outline: none;
+  border: none;
+  transition: translate ease-in-out 400ms;
+`;
+
+const Amount = styled.input`
+  color: ${Colors.accent};
+  font-size: ${Sizes.large};
+  background: none;
+  width: max-content;
+  outline: none;
+  border: none;
+  font-family: inherit;
+  padding-bottom: 2px;
+  border-bottom: 1px solid ${Colors.accent};
+  width: 50%;
+  text-align: end;
+`;
+
+const Name = styled.div`
+  font-size: ${Sizes.medium};
+  color: ${Colors.text};
+`;
+
+function ExpenseTile({ expense, onUpdate }: IProps) {
+  const amountRef = useRef<HTMLInputElement>();
+  const [amount, setAmount] = useState(expense.amount);
+  const [actionToggle, showActions] = useState(false);
+
+  const expenseItemRef = useRef<HTMLButtonElement>();
+
+  useEffect(() => {
+    if (!expenseItemRef.current) return;
+    if (actionToggle) {
+      // show actions
+      expenseItemRef.current.classList.add("slideToLeft");
+    } else {
+      expenseItemRef.current.classList.remove("slideToLeft");
+    }
+  }, [actionToggle]);
+
+  useEffect(() => {
+    const updateRecord = debounce(async () => {
+      const data = {
+        ...expense,
+        amount,
+      };
+      try {
+        await pb.collection("expenses").update(expense.id, data);
+        onUpdate();
+      } catch (e) {
+        console.error(e);
+      }
+    }, 200);
+
+    updateRecord();
+
+    if (amountRef.current) {
+      const amountLength = String(amount).length;
+      amountRef.current.style.width = `${
+        amountLength > 3 ? amountLength + 0.5 : 4
+      }ch`;
+    }
+  }, [amount]);
+
+  return (
+    <ExpenseItem
+      onClick={() => showActions((prev) => !prev)}
+      ref={expenseItemRef as LegacyRef<HTMLButtonElement>}
+    >
+      <Name>{expense.name}</Name>
+      <Amount
+        value={amount}
+        onChange={(e) => setAmount(parseInt(e.target.value))}
+        ref={amountRef as LegacyRef<HTMLInputElement>}
+        inputMode="numeric"
+      />
+    </ExpenseItem>
+  );
+}
+
+export default ExpenseTile;

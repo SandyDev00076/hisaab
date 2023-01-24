@@ -3,6 +3,7 @@
 */
 
 export enum Collections {
+	Expenses = "expenses",
 	Sets = "sets",
 	Users = "users",
 }
@@ -12,23 +13,30 @@ export type IsoDateString = string
 export type RecordIdString = string
 
 // System fields
-export type BaseSystemFields = {
+export type BaseSystemFields<T = never> = {
 	id: RecordIdString
 	created: IsoDateString
 	updated: IsoDateString
 	collectionId: string
 	collectionName: Collections
-	expand?: { [key: string]: any }
+	expand?: T
 }
 
-export type AuthSystemFields = {
+export type AuthSystemFields<T = never> = {
 	email: string
 	emailVisibility: boolean
 	username: string
 	verified: boolean
-} & BaseSystemFields
+} & BaseSystemFields<T>
 
 // Record types for each collection
+
+export type ExpensesRecord = {
+	set: string
+	amount?: number
+	name: string
+	description?: string
+}
 
 export type SetsRecord = {
 	name: string
@@ -42,10 +50,12 @@ export type UsersRecord = {
 }
 
 // Response types include system fields and match responses from the PocketBase API
+export type ExpensesResponse = ExpensesRecord & BaseSystemFields
 export type SetsResponse = SetsRecord & BaseSystemFields
 export type UsersResponse = UsersRecord & AuthSystemFields
 
 export type CollectionRecords = {
+	expenses: ExpensesRecord
 	sets: SetsRecord
 	users: UsersRecord
 }

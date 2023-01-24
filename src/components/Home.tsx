@@ -5,44 +5,20 @@ import pb from "../lib/pocketbase";
 import {
   Container,
   DangerButton,
+  EmptyUI,
+  Expense,
   Greeting,
+  Info,
+  List,
+  ListContainer,
   PrimaryButton,
   Tray,
 } from "../style/shared";
 import { Colors, Sizes } from "../style/variables";
-import type { SetsRecord } from "../types/pocketbase-types";
+import type { SetsResponse } from "../types/pocketbase-types";
 
 const HomeContainer = styled(Container)`
   gap: 32px;
-`;
-
-const Info = styled.div`
-  & > h4 {
-    margin-bottom: 10px;
-    font-size: ${Sizes.xSmall};
-    color: ${Colors.secondaryText};
-  }
-`;
-
-const Expense = styled.h1`
-  color: ${Colors.accent};
-  font-size: ${Sizes.xLarge};
-  flex: 1;
-  line-height: 0.7;
-`;
-
-const ListContainer = styled.section`
-  width: 100%;
-  & > h3 {
-    color: ${Colors.text};
-    font-size: ${Sizes.medium};
-    margin-bottom: 10px;
-    text-align: center;
-  }
-`;
-
-const List = styled.div`
-  width: 100%;
 `;
 
 const SetItem = styled.button`
@@ -72,24 +48,18 @@ const SetItem = styled.button`
   }
 `;
 
-const EmptyUI = styled.div`
-  color: ${Colors.secondaryText};
-  font-size: ${Sizes.medium};
-  text-align: center;
-`;
-
 const AddButton = styled(PrimaryButton)`
   flex: 0.6;
 `;
 
 const LogoutButton = styled(DangerButton)`
   margin-bottom: 64px;
-`
+`;
 
 function Home() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  const [sets, setSets] = useState<SetsRecord[]>([]);
+  const [sets, setSets] = useState<SetsResponse[]>([]);
 
   function logout() {
     pb.authStore.clear();
@@ -109,6 +79,10 @@ function Home() {
     navigate("add");
   }
 
+  function goToSet(setId: string) {
+    navigate(setId);
+  }
+
   useEffect(() => {
     if (pb.authStore.model) {
       setName(pb.authStore.model.name);
@@ -118,7 +92,7 @@ function Home() {
         const filterQuery = `userId = \'${userId}\'`;
         const resultList = await pb
           .collection("sets")
-          .getList<SetsRecord>(1, 50, {
+          .getList<SetsResponse>(1, 50, {
             filter: filterQuery,
           });
         setSets(resultList.items);
@@ -129,7 +103,9 @@ function Home() {
 
   return (
     <HomeContainer>
-      <Greeting>Hello {name}</Greeting>
+      <Greeting>
+        Hello <strong>{name}</strong>
+      </Greeting>
       <ListContainer>
         <h3>
           {sets.length} {sets.length === 1 ? "set" : "sets"}
@@ -137,7 +113,7 @@ function Home() {
         {sets.length > 0 ? (
           <List>
             {sets.map((set) => (
-              <SetItem key={set.name}>
+              <SetItem key={set.name} onClick={() => goToSet(set.id)}>
                 <div className="name">{set.name}</div>
                 <div className="expense">{set.expense?.toFixed(2)}</div>
               </SetItem>

@@ -27,6 +27,18 @@ export const Input = styled.input`
   color: white;
 `;
 
+export const TextField = styled.textarea`
+  font-family: inherit;
+  resize: none;
+  padding: 8px 10px;
+  width: 100%;
+  background: none;
+  border: 1px solid ${Colors.bgLight5};
+  border-radius: 10px;
+  outline: none;
+  color: white;
+`
+
 export const Button = styled.button`
   padding: 8px 10px;
   text-transform: uppercase;
@@ -82,6 +94,10 @@ export const Greeting = styled.h1`
   color: ${Colors.secondaryText};
   font-weight: normal;
   display: block;
+
+  & > strong {
+    color: ${Colors.text};
+  }
 `;
 
 export const Filler = styled.div`
@@ -100,4 +116,39 @@ export const Tray = styled.footer`
   gap: 16px;
   align-items: flex-end;
   justify-content: space-between;
+`;
+
+export const ListContainer = styled.section`
+  width: 100%;
+  & > h3 {
+    color: ${Colors.text};
+    font-size: ${Sizes.medium};
+    margin-bottom: 10px;
+    text-align: center;
+  }
+`;
+
+export const List = styled.div`
+  width: 100%;
+`;
+
+export const Info = styled.div`
+  & > h4 {
+    margin-bottom: 10px;
+    font-size: ${Sizes.xSmall};
+    color: ${Colors.secondaryText};
+  }
+`;
+
+export const Expense = styled.h1`
+  color: ${Colors.accent};
+  font-size: ${Sizes.xLarge};
+  flex: 1;
+  line-height: 0.7;
+`;
+
+export const EmptyUI = styled.div`
+  color: ${Colors.secondaryText};
+  font-size: ${Sizes.medium};
+  text-align: center;
 `;
