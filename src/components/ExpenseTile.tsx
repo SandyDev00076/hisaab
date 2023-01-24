@@ -4,13 +4,28 @@ import pb from "../lib/pocketbase";
 import { Colors, Sizes } from "../style/variables";
 import { ExpensesResponse } from "../types/pocketbase-types";
 import { debounce } from "../utils";
+import { ReactComponent as DeleteIcon } from "../assets/delete.svg";
+import { DangerIconButton } from "../style/shared";
 
 interface IProps {
   expense: ExpensesResponse;
   onUpdate: Function;
 }
 
+const Container = styled.div`
+  position: relative;
+`;
+
+const DeleteButton = styled(DangerIconButton)`
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  z-index: 1;
+`;
+
 const ExpenseItem = styled.button`
+  position: relative;
+  z-index: 2;
   background-color: ${Colors.bg};
   width: 100%;
   border-radius: 10px;
@@ -21,7 +36,7 @@ const ExpenseItem = styled.button`
   justify-content: space-between;
   outline: none;
   border: none;
-  transition: translate ease-in-out 400ms;
+  transition: translate ease-in-out 300ms;
 `;
 
 const Amount = styled.input`
@@ -84,19 +99,34 @@ function ExpenseTile({ expense, onUpdate }: IProps) {
     }
   }, [amount]);
 
+  async function deleteExpense() {
+    // deleting the expense
+    try {
+      await pb.collection("expenses").delete(expense.id);
+      onUpdate();
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   return (
-    <ExpenseItem
-      onClick={() => showActions((prev) => !prev)}
-      ref={expenseItemRef as LegacyRef<HTMLButtonElement>}
-    >
-      <Name>{expense.name}</Name>
-      <Amount
-        value={amount}
-        onChange={(e) => setAmount(parseInt(e.target.value))}
-        ref={amountRef as LegacyRef<HTMLInputElement>}
-        inputMode="numeric"
-      />
-    </ExpenseItem>
+    <Container>
+      <ExpenseItem
+        onClick={() => showActions((prev) => !prev)}
+        ref={expenseItemRef as LegacyRef<HTMLButtonElement>}
+      >
+        <Name>{expense.name}</Name>
+        <Amount
+          value={amount}
+          onChange={(e) => setAmount(parseInt(e.target.value))}
+          ref={amountRef as LegacyRef<HTMLInputElement>}
+          inputMode="numeric"
+        />
+      </ExpenseItem>
+      <DeleteButton onClick={deleteExpense}>
+        <DeleteIcon />
+      </DeleteButton>
+    </Container>
   );
 }
 

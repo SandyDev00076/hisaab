@@ -126,7 +126,7 @@ function Set() {
             {expenses.map((expense, index) => (
               <ExpenseTile
                 expense={expense}
-                key={index}
+                key={expense.id}
                 onUpdate={getExpenses}
               />
             ))}

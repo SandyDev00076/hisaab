@@ -10,6 +10,7 @@ export const Colors = {
     actionLight12: "#b3bcd5",
     actionLight11: "#a8b3cf",
     danger: "#b44e39",
+    dangerLight5: "#d28170",
     accent: "#FFD6BA",
     white: "#fff"
 }

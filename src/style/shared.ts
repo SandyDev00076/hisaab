@@ -37,7 +37,7 @@ export const TextField = styled.textarea`
   border-radius: 10px;
   outline: none;
   color: white;
-`
+`;
 
 export const Button = styled.button`
   padding: 8px 10px;
@@ -86,6 +86,41 @@ export const DangerButton = styled(Button)`
   color: ${Colors.text};
   & > svg {
     fill: ${Colors.text};
+  }
+`;
+
+export const IconButton = styled.button`
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 2px solid;
+  background: none;
+  outline: none;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+
+  &:disabled {
+    filter: brightness(0.5);
+    cursor: default;
+  }
+`;
+
+export const PrimaryIconButton = styled(IconButton)`
+  border-color: ${Colors.bgLight25};
+  & > svg {
+    fill: ${Colors.bgLight25};
+  }
+`;
+
+export const DangerIconButton = styled(IconButton)`
+  border-color: ${Colors.dangerLight5};
+  & > svg {
+    fill: ${Colors.dangerLight5};
   }
 `;
 
