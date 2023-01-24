@@ -64,14 +64,23 @@ function ExpenseTile({ expense, onUpdate }: IProps) {
   const [actionToggle, showActions] = useState(false);
 
   const expenseItemRef = useRef<HTMLButtonElement>();
+  const containerRef = useRef<HTMLDivElement>();
 
   useEffect(() => {
-    if (!expenseItemRef.current) return;
+    if (!expenseItemRef.current || !containerRef.current) return;
     if (actionToggle) {
       // show actions
       expenseItemRef.current.classList.add("slideToLeft");
     } else {
       expenseItemRef.current.classList.remove("slideToLeft");
+    }
+
+    // logic to detect backdrop click
+    window.onclick = (e) => {
+      if (e.target instanceof Node && !containerRef.current?.contains(e.target) && actionToggle) {
+        // clicked outside container
+        showActions(false);
+      }
     }
   }, [actionToggle]);
 
@@ -110,7 +119,7 @@ function ExpenseTile({ expense, onUpdate }: IProps) {
   }
 
   return (
-    <Container>
+    <Container ref={containerRef as LegacyRef<HTMLDivElement>}>
       <ExpenseItem
         onClick={() => showActions((prev) => !prev)}
         ref={expenseItemRef as LegacyRef<HTMLButtonElement>}
