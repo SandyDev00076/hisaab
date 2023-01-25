@@ -49,8 +49,8 @@ function AddSet() {
       userId: pb.authStore.model.id,
     };
     try {
-      await pb.collection("sets").create(data);
-      navigate("/");
+      const newSet = await pb.collection("sets").create(data);
+      navigate(`/${newSet.id}`);
     } catch (e) {
       console.error(e);
     }
