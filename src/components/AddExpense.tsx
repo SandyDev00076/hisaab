@@ -34,7 +34,7 @@ const AddExpenseTextField = styled(TextField)`
 
 function AddExpense() {
   const [name, setName] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState("");
   const [description, setDesc] = useState("");
 
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ function AddExpense() {
     if (!name || !amount || !set) return;
     const data = {
       set,
-      amount,
+      amount: parseFloat(amount),
       name,
       description,
     };
@@ -71,6 +71,21 @@ function AddExpense() {
     }
   }
 
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    let val = e.target.value;
+    const newVal = val.replace(/[^0-9\.]+/, "");
+
+    // dont let the user add the second decimal
+    if (
+      newVal.length > 1 && // if length is atleast 2
+      [...newVal.slice(0, -1)].includes(".") && // if a decimal is already present
+      newVal.charAt(newVal.length - 1) === "." // and new char is also a decimal
+    )
+      return;
+
+    setAmount(newVal);
+  }
+
   return (
     <AddExpenseContainer>
       <Greeting>Add an expense</Greeting>
@@ -86,9 +101,8 @@ function AddExpense() {
         <AddExpenseField label="Amount">
           <AddExpenseInput
             name="amount"
-            inputMode="numeric"
             value={amount}
-            onChange={(e) => setAmount(e.target.value === "" ? 0 : parseInt(e.target.value))}
+            onChange={handleChange}
           />
         </AddExpenseField>
         <AddExpenseField label="Description">

@@ -36,7 +36,7 @@ const ExpenseItem = styled.button`
   justify-content: space-between;
   outline: none;
   border: none;
-  transition: translate ease-in-out 300ms;
+  transition: translate ease-in-out 250ms;
 `;
 
 const Amount = styled.input`
@@ -127,7 +127,7 @@ function ExpenseTile({ expense, onUpdate }: IProps) {
         <Name>{expense.name}</Name>
         <Amount
           value={amount}
-          onChange={(e) => setAmount(parseInt(e.target.value))}
+          onChange={(e) => setAmount(parseFloat(e.target.value))}
           ref={amountRef as LegacyRef<HTMLInputElement>}
           inputMode="numeric"
         />
