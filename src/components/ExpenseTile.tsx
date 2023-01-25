@@ -3,7 +3,7 @@ import { LegacyRef, useEffect, useRef, useState } from "react";
 import pb from "../lib/pocketbase";
 import { Colors, Sizes } from "../style/variables";
 import { ExpensesResponse } from "../types/pocketbase-types";
-import { debounce } from "../utils";
+import { debounce, handleStringAsDecimal } from "../utils";
 import { ReactComponent as DeleteIcon } from "../assets/delete.svg";
 import { DangerIconButton } from "../style/shared";
 
@@ -79,18 +79,22 @@ function ExpenseTile({ expense, onUpdate }: IProps) {
 
     // logic to detect backdrop click
     window.onclick = (e) => {
-      if (e.target instanceof Node && !containerRef.current?.contains(e.target) && actionToggle) {
+      if (
+        e.target instanceof Node &&
+        !containerRef.current?.contains(e.target) &&
+        actionToggle
+      ) {
         // clicked outside container
         showActions(false);
       }
-    }
+    };
   }, [actionToggle]);
 
   useEffect(() => {
     const updateRecord = debounce(async () => {
       const data = {
         ...expense,
-        amount: parseFloat(amount)
+        amount: parseFloat(amount),
       };
       try {
         await pb.collection("expenses").update(expense.id, data);
@@ -122,23 +126,18 @@ function ExpenseTile({ expense, onUpdate }: IProps) {
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     let val = e.target.value;
-    const newVal = val.replace(/[^0-9\.]+/, "");
-
-    // dont let the user add the second decimal
-    if (
-      newVal.length > 1 && // if length is atleast 2
-      [...newVal.slice(0, -1)].includes(".") && // if a decimal is already present
-      newVal.charAt(newVal.length - 1) === "." // and new char is also a decimal
-    )
-      return;
-
-    setAmount(newVal);
+    const newVal = handleStringAsDecimal(val);
+    if (newVal) setAmount(newVal);
   }
 
   return (
     <Container ref={containerRef as LegacyRef<HTMLDivElement>}>
       <ExpenseItem
-        onClick={() => showActions((prev) => !prev)}
+        onClick={(e) => {
+          if (e.target instanceof Node && amountRef.current?.contains(e.target))
+            return;
+          showActions((prev) => !prev);
+        }}
         ref={expenseItemRef as LegacyRef<HTMLButtonElement>}
       >
         <Name>{expense.name}</Name>

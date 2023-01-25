@@ -13,6 +13,7 @@ import {
   Tray,
 } from "../style/shared";
 import { Sizes } from "../style/variables";
+import { handleStringAsDecimal } from "../utils";
 import Field from "./Field";
 
 const AddExpenseContainer = styled(Container)`
@@ -73,17 +74,8 @@ function AddExpense() {
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     let val = e.target.value;
-    const newVal = val.replace(/[^0-9\.]+/, "");
-
-    // dont let the user add the second decimal
-    if (
-      newVal.length > 1 && // if length is atleast 2
-      [...newVal.slice(0, -1)].includes(".") && // if a decimal is already present
-      newVal.charAt(newVal.length - 1) === "." // and new char is also a decimal
-    )
-      return;
-
-    setAmount(newVal);
+    const newVal = handleStringAsDecimal(val);
+    if (newVal) setAmount(newVal);
   }
 
   return (
