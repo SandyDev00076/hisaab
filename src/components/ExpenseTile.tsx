@@ -41,7 +41,7 @@ const ExpenseItem = styled.button`
 
 const Amount = styled.input`
   color: ${Colors.accent};
-  font-size: ${Sizes.large};
+  font-size: ${Sizes.medium};
   background: none;
   width: max-content;
   outline: none;
@@ -56,11 +56,13 @@ const Amount = styled.input`
 const Name = styled.div`
   font-size: ${Sizes.medium};
   color: ${Colors.text};
+  text-align: start;
+  word-break: break-all;
 `;
 
 function ExpenseTile({ expense, onUpdate }: IProps) {
   const amountRef = useRef<HTMLInputElement>();
-  const [amount, setAmount] = useState(expense.amount);
+  const [amount, setAmount] = useState<string>(`${expense.amount?.toFixed(2)}`);
   const [actionToggle, showActions] = useState(false);
 
   const expenseItemRef = useRef<HTMLButtonElement>();
@@ -88,7 +90,7 @@ function ExpenseTile({ expense, onUpdate }: IProps) {
     const updateRecord = debounce(async () => {
       const data = {
         ...expense,
-        amount,
+        amount: parseFloat(amount)
       };
       try {
         await pb.collection("expenses").update(expense.id, data);
@@ -101,7 +103,7 @@ function ExpenseTile({ expense, onUpdate }: IProps) {
     updateRecord();
 
     if (amountRef.current) {
-      const amountLength = String(amount).length;
+      const amountLength = amount.length;
       amountRef.current.style.width = `${
         amountLength > 3 ? amountLength + 0.5 : 4
       }ch`;
@@ -118,6 +120,21 @@ function ExpenseTile({ expense, onUpdate }: IProps) {
     }
   }
 
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    let val = e.target.value;
+    const newVal = val.replace(/[^0-9\.]+/, "");
+
+    // dont let the user add the second decimal
+    if (
+      newVal.length > 1 && // if length is atleast 2
+      [...newVal.slice(0, -1)].includes(".") && // if a decimal is already present
+      newVal.charAt(newVal.length - 1) === "." // and new char is also a decimal
+    )
+      return;
+
+    setAmount(newVal);
+  }
+
   return (
     <Container ref={containerRef as LegacyRef<HTMLDivElement>}>
       <ExpenseItem
@@ -127,7 +144,7 @@ function ExpenseTile({ expense, onUpdate }: IProps) {
         <Name>{expense.name}</Name>
         <Amount
           value={amount}
-          onChange={(e) => setAmount(parseFloat(e.target.value))}
+          onChange={handleChange}
           ref={amountRef as LegacyRef<HTMLInputElement>}
           inputMode="numeric"
         />
