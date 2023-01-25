@@ -25,3 +25,15 @@ export function handleStringAsDecimal(val: string) {
 
   return newVal;
 }
+
+/**
+ * Function that compacts the number according to a locale
+ * e.g. 120000 -> 1.2L
+ * @param locale locale according to which number needs to be compacted
+ * @returns Formatter using which numbers can be compacted
+ */
+export function formatCompact(locale = "en-IN") {
+  return new Intl.NumberFormat(locale, {
+    notation: "compact",
+  });
+}

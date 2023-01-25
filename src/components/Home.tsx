@@ -16,6 +16,7 @@ import {
 } from "../style/shared";
 import { Colors, Sizes } from "../style/variables";
 import type { SetsResponse } from "../types/pocketbase-types";
+import { formatCompact } from "../utils";
 
 const HomeContainer = styled(Container)`
   gap: 32px;
@@ -127,7 +128,7 @@ function Home() {
       <Tray>
         <Info>
           <h4>Total</h4>
-          <Expense>{totalExpense.toFixed(2)}/-</Expense>
+          <Expense>{formatCompact().format(totalExpense)}</Expense>
         </Info>
         <AddButton onClick={addASet}>Add</AddButton>
       </Tray>

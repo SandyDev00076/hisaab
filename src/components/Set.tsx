@@ -70,6 +70,10 @@ function Set() {
     if (!id) return;
     try {
       await pb.collection("sets").delete(id);
+      // delete all expenses of the set as well in the background
+      expenses.forEach((expense) => {
+        pb.collection("expenses").delete(expense.id);
+      });
       navigate("/");
     } catch (e) {
       console.error(e);
