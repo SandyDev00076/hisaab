@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import pb from "../lib/pocketbase";
+import { useLoading } from "../data/loadingContext";
 
 const LoginContainer = styled(Container)`
   gap: 32px;
@@ -67,9 +68,12 @@ function Login() {
     resolver: yupResolver(schema),
   });
   const navigate = useNavigate();
+  const { showLoading, hideLoading } = useLoading();
 
   async function onLogin(data: FieldValues) {
+    showLoading();
     await pb.collection("users").authWithPassword(data.email, data.password);
+    hideLoading();
     navigate(0);
   }
 

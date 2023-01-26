@@ -41,8 +41,15 @@ export const useLoading = () => {
   if (!context) {
     throw new Error("Please use useLoading inside LoadingProvider");
   }
-  return context;
-};
 
-export const showLoading = (dispatch: Dispatch) => dispatch({ type: "start" });
-export const hideLoading = (dispatch: Dispatch) => dispatch({ type: "stop" });
+  const { state, dispatch } = context;
+
+  const showLoading = () => dispatch({ type: "start" });
+  const hideLoading = () => dispatch({ type: "stop" });
+
+  return {
+    state,
+    showLoading,
+    hideLoading,
+  };
+};
