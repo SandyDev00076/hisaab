@@ -17,6 +17,7 @@ import {
 import { Colors, Sizes } from "../style/variables";
 import type { SetsResponse } from "../types/pocketbase-types";
 import { formatCompact } from "../utils";
+import Separator from "./Separator";
 
 const HomeContainer = styled(Container)`
   gap: 32px;
@@ -102,6 +103,8 @@ function Home() {
     }
   }, []);
 
+  let currText = ""; // current separator text
+
   return (
     <HomeContainer>
       <Greeting>
@@ -113,12 +116,27 @@ function Home() {
         </h3>
         {sets.length > 0 ? (
           <List>
-            {sets.map((set) => (
-              <SetItem key={set.name} onClick={() => goToSet(set.id)}>
-                <div className="name">{set.name}</div>
-                <div className="expense">{set.expense?.toFixed(2)}</div>
-              </SetItem>
-            ))}
+            {sets.map((set) => {
+              const setDate = new Date(set.created);
+              const setMonth = new Intl.DateTimeFormat("en-IN", {
+                month: "long",
+              }).format(setDate);
+              const setYear = new Intl.DateTimeFormat("en-IN", {
+                year: "2-digit",
+              }).format(setDate);
+              const separatorText = `${setMonth} ${setYear}`;
+              const showSeparator = currText !== separatorText;
+              currText = separatorText;
+              return (
+                <>
+                  {showSeparator && <Separator text={separatorText} />}
+                  <SetItem key={set.name} onClick={() => goToSet(set.id)}>
+                    <div className="name">{set.name}</div>
+                    <div className="expense">{set.expense?.toFixed(2)}</div>
+                  </SetItem>
+                </>
+              );
+            })}
           </List>
         ) : (
           <EmptyUI>Add one to get started</EmptyUI>

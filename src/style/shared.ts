@@ -158,7 +158,7 @@ export const ListContainer = styled.section`
   & > h3 {
     color: ${Colors.text};
     font-size: ${Sizes.medium};
-    margin-bottom: 10px;
+    margin-bottom: 16px;
     text-align: center;
   }
 `;
