@@ -187,7 +187,7 @@ function Set() {
       <Tray>
         <Info>
           <h4>Total</h4>
-          <Expense>{totalExpense.toFixed(2)}/-</Expense>
+          <Expense>{totalExpense.toFixed(2)}</Expense>
         </Info>
         <AddButton onClick={addAnExpense}>Add</AddButton>
       </Tray>
