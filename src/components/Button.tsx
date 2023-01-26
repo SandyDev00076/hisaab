@@ -1,14 +1,14 @@
 import { forwardRef } from "react";
+import { useLoading } from "../data/loadingContext";
 
-interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  loading?: boolean;
-}
+interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 const Button = forwardRef<HTMLButtonElement, IProps>(
-  ({ children, loading = false, ...props }, ref) => {
+  ({ children, ...props }, ref) => {
+    const { state } = useLoading();
     return (
       <button {...props} ref={ref}>
-        {loading ? "Loading" : children}
+        {state.loading ? "Loading" : children}
       </button>
     );
   }
