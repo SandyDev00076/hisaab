@@ -91,9 +91,7 @@ function Set() {
         ...set,
         expense: total,
       };
-      showLoading();
       const record = await pb.collection("sets").update<SetsResponse>(id, data);
-      hideLoading();
       setSet(record);
     } catch (e) {
       console.error(e);
