@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLoading } from "../data/loadingContext";
 import pb from "../lib/pocketbase";
 import {
   Container,
@@ -63,6 +64,7 @@ function Home() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [sets, setSets] = useState<SetsResponse[]>([]);
+  const { showLoading, hideLoading } = useLoading();
 
   function logout() {
     pb.authStore.clear();
@@ -93,11 +95,13 @@ function Home() {
       // get all sets with this userId
       async function getSets() {
         const filterQuery = `userId = \'${userId}\'`;
+        showLoading();
         const resultList = await pb
           .collection("sets")
           .getList<SetsResponse>(1, 50, {
             filter: filterQuery,
           });
+        hideLoading();
         setSets(resultList.items);
       }
       getSets();

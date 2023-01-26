@@ -14,6 +14,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLoading } from "../data/loadingContext";
 
 const SignUpContainer = styled(Container)`
   gap: 32px;
@@ -57,10 +58,13 @@ function SignUp() {
 
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { showLoading, hideLoading } = useLoading();
 
   async function signItUp(data: FieldValues) {
     try {
+      showLoading();
       await pb.collection("users").create(data);
+      hideLoading();
       // user has been successfully created
       navigate("/");
     } catch (e: any) {

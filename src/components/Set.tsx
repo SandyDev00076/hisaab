@@ -23,6 +23,7 @@ import ExpenseTile from "./ExpenseTile";
 import { ReactComponent as DeleteIcon } from "../assets/delete.svg";
 import { ReactComponent as CloseIcon } from "../assets/close.svg";
 import { Colors, Sizes } from "../style/variables";
+import { useLoading } from "../data/loadingContext";
 
 const SetContainer = styled(Container)`
   gap: 32px;
@@ -60,6 +61,7 @@ function Set() {
   const [expenses, setExpenses] = useState<ExpensesResponse[]>([]);
   const [set, setSet] = useState<SetsResponse>();
   const [deleteConfirmation, showDeleteConfirmation] = useState(false);
+  const { showLoading, hideLoading } = useLoading();
 
   function goToHome() {
     navigate("/");
@@ -69,7 +71,9 @@ function Set() {
     // deleting the set
     if (!id) return;
     try {
+      showLoading();
       await pb.collection("sets").delete(id);
+      hideLoading();
       // delete all expenses of the set as well in the background
       expenses.forEach((expense) => {
         pb.collection("expenses").delete(expense.id);
@@ -87,8 +91,9 @@ function Set() {
         ...set,
         expense: total,
       };
-
+      showLoading();
       const record = await pb.collection("sets").update<SetsResponse>(id, data);
+      hideLoading();
       setSet(record);
     } catch (e) {
       console.error(e);
@@ -122,7 +127,9 @@ function Set() {
   const getSet = useCallback(async () => {
     if (!id) return;
     try {
+      showLoading();
       const record = await pb.collection("sets").getOne<SetsResponse>(id);
+      hideLoading();
       setSet(record);
     } catch (e) {
       console.error(e);
