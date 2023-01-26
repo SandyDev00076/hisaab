@@ -6,6 +6,7 @@ import { ExpensesResponse } from "../types/pocketbase-types";
 import { debounce, handleStringAsDecimal } from "../utils";
 import { ReactComponent as DeleteIcon } from "../assets/delete.svg";
 import { DangerIconButton } from "../style/shared";
+import Button from "./Button";
 
 interface IProps {
   expense: ExpensesResponse;
@@ -23,7 +24,7 @@ const DeleteButton = styled(DangerIconButton)`
   z-index: 1;
 `;
 
-const ExpenseItem = styled.button`
+const ExpenseItem = styled(Button)`
   position: relative;
   z-index: 2;
   background-color: ${Colors.bg};
@@ -65,7 +66,7 @@ function ExpenseTile({ expense, onUpdate }: IProps) {
   const [amount, setAmount] = useState<string>(`${expense.amount?.toFixed(2)}`);
   const [actionToggle, showActions] = useState(false);
 
-  const expenseItemRef = useRef<HTMLButtonElement>();
+  const expenseItemRef = useRef<HTMLButtonElement>(null);
   const containerRef = useRef<HTMLDivElement>();
 
   useEffect(() => {
@@ -138,7 +139,7 @@ function ExpenseTile({ expense, onUpdate }: IProps) {
             return;
           showActions((prev) => !prev);
         }}
-        ref={expenseItemRef as LegacyRef<HTMLButtonElement>}
+        ref={expenseItemRef}
       >
         <Name>{expense.name}</Name>
         <Amount

@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Colors, Sizes } from "./variables";
+import BasicButton from "../components/Button";
 
 export const Container = styled.section`
   padding: 64px 32px;
@@ -39,7 +40,7 @@ export const TextField = styled.textarea`
   color: white;
 `;
 
-export const Button = styled.button`
+export const Button = styled(BasicButton)`
   padding: 8px 10px;
   text-transform: uppercase;
   border: none;
@@ -89,7 +90,7 @@ export const DangerButton = styled(Button)`
   }
 `;
 
-export const IconButton = styled.button`
+export const IconButton = styled(BasicButton)`
   width: 42px;
   height: 42px;
   border-radius: 50%;

@@ -17,13 +17,14 @@ import {
 import { Colors, Sizes } from "../style/variables";
 import type { SetsResponse } from "../types/pocketbase-types";
 import { formatCompact } from "../utils";
+import Button from "./Button";
 import Separator from "./Separator";
 
 const HomeContainer = styled(Container)`
   gap: 32px;
 `;
 
-const SetItem = styled.button`
+const SetItem = styled(Button)`
   display: flex;
   gap: 16px;
   justify-content: space-between;
