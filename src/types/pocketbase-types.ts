@@ -4,6 +4,7 @@
 
 export enum Collections {
 	Expenses = "expenses",
+	Items = "items",
 	Sets = "sets",
 	Users = "users",
 }
@@ -38,6 +39,10 @@ export type ExpensesRecord = {
 	description?: string
 }
 
+export type ItemsRecord = {
+	item: string
+}
+
 export type SetsRecord = {
 	name: string
 	userId: string
@@ -51,11 +56,13 @@ export type UsersRecord = {
 
 // Response types include system fields and match responses from the PocketBase API
 export type ExpensesResponse = ExpensesRecord & BaseSystemFields
+export type ItemsResponse = ItemsRecord & BaseSystemFields
 export type SetsResponse = SetsRecord & BaseSystemFields
 export type UsersResponse = UsersRecord & AuthSystemFields
 
 export type CollectionRecords = {
 	expenses: ExpensesRecord
+	items: ItemsRecord
 	sets: SetsRecord
 	users: UsersRecord
 }
