@@ -6,6 +6,7 @@ import pb from "../lib/pocketbase";
 import {
   Container,
   DangerButton,
+  DangerIconButton,
   EmptyUI,
   Expense,
   Greeting,
@@ -20,6 +21,7 @@ import type { SetsResponse } from "../types/pocketbase-types";
 import { formatCompact } from "../utils";
 import Button from "./Button";
 import Separator from "./Separator";
+import { ReactComponent as LogoutIcon } from "../assets/logout.svg";
 
 const HomeContainer = styled(Container)`
   gap: 32px;
@@ -56,8 +58,10 @@ const AddButton = styled(PrimaryButton)`
   flex: 0.6;
 `;
 
-const LogoutButton = styled(DangerButton)`
-  margin-bottom: 64px;
+const LogoutButton = styled(DangerIconButton)`
+  position: absolute;
+  right: -64px;
+  top: -10px;
 `;
 
 function Home() {
@@ -113,7 +117,10 @@ function Home() {
   return (
     <HomeContainer>
       <Greeting>
-        Hello <strong>{name}</strong>
+        Hello <strong>{name}</strong>{" "}
+        <LogoutButton onClick={logout}>
+          <LogoutIcon />
+        </LogoutButton>
       </Greeting>
       <ListContainer>
         <h3>
@@ -147,7 +154,6 @@ function Home() {
           <EmptyUI>Add one to get started</EmptyUI>
         )}
       </ListContainer>
-      <LogoutButton onClick={logout}>Logout</LogoutButton>
       <Tray>
         <Info>
           <h4>Total</h4>

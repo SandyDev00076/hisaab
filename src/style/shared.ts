@@ -130,6 +130,7 @@ export const Greeting = styled.h1`
   color: ${Colors.secondaryText};
   font-weight: normal;
   display: block;
+  position: relative;
 
   & > strong {
     color: ${Colors.text};
