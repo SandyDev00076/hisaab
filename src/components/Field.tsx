@@ -1,23 +1,34 @@
 import styled from "@emotion/styled";
-import { Sizes } from "../style/variables";
+import { Colors, Sizes } from "../style/variables";
 
 interface IProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
-    label: string;
-    children: React.ReactNode;
+  label: string;
+  children: React.ReactNode;
+  optional?: boolean;
 }
 
 const Label = styled.div`
-    font-size: ${Sizes.small};
-    margin: 0 0 5px 10px;
-`
+  font-size: ${Sizes.small};
+  margin: 0 10px 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
 
-function Field({ label, children, ...props }: IProps) {
-    return (
-        <label {...props}>
-            <Label>{label}</Label>
-            {children}
-        </label>
-    )
+const Optional = styled.span`
+  color: ${Colors.secondaryText};
+`;
+
+function Field({ label, optional = false, children, ...props }: IProps) {
+  return (
+    <label {...props}>
+      <Label>
+        {label}
+        {optional && <Optional>optional</Optional>}
+      </Label>
+      {children}
+    </label>
+  );
 }
 
 export default Field;

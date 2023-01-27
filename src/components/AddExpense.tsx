@@ -166,7 +166,7 @@ function AddExpense() {
             onChange={handleChange}
           />
         </AddExpenseField>
-        <AddExpenseField label="Description">
+        <AddExpenseField label="Description" optional>
           <AddExpenseTextField
             name="description"
             value={description}
