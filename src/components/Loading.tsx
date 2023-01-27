@@ -1,31 +1,28 @@
 import styled from "@emotion/styled";
 import { Colors } from "../style/variables";
 
-const Loader = styled.span`
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  position: relative;
-  border: 4px solid ${Colors.bgLight5};
-  top: 50%;
-  animation: loader 2s infinite ease;
-  margin: 2px;
+const Container = styled.div`
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
 `;
 
-const InnerLoader = styled.span`
-  vertical-align: top;
-  display: inline-block;
-  width: 100%;
-  background-color: ${Colors.bgLight5};
-  animation: loader-inner 2s infinite ease-in;
-`;
+const ProgressBar = styled.div`
+  height: 8px;
+  border-radius: 8px;
+  background-color: ${Colors.bgLight25};
+  opacity: 0.8;
+  animation: loading 1s infinite linear;
+  transform-origin: 0% 50%;
+`
 
-function Loading() {
+const Loading = () => {
   return (
-    <Loader>
-      <InnerLoader />
-    </Loader>
-  );
+    <Container>
+      <ProgressBar />
+    </Container>
+  )
 }
 
 export default Loading;
