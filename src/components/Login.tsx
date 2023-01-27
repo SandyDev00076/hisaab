@@ -36,13 +36,6 @@ const LoginField = styled(Field)`
   margin-bottom: 16px;
 `;
 
-const ForgotPassword = styled.a`
-  font-size: ${Sizes.small};
-  display: block;
-  text-align: center;
-  margin-bottom: 16px;
-`;
-
 const Footer = styled.div`
   display: flex;
   flex-direction: column;
@@ -52,6 +45,10 @@ const Footer = styled.div`
     color: ${Colors.text};
     margin-bottom: 10px;
   }
+`;
+
+const LoginButton = styled(PrimaryButton)`
+  margin-top: 32px;
 `;
 
 const schema = yup.object({
@@ -92,8 +89,7 @@ function Login() {
         <LoginField label="Password">
           <LoginInput type={"password"} {...register("password")} />
         </LoginField>
-        <ForgotPassword href="/">Forgot password ?</ForgotPassword>
-        <PrimaryButton disabled={!isValid}>Login</PrimaryButton>
+        <LoginButton disabled={!isValid}>Login</LoginButton>
       </Form>
       <Filler />
       <Footer>

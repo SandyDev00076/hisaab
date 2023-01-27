@@ -65,6 +65,14 @@ a[href] {
   translate: -64px;
 }
 
+input,
+textarea,
+button,
+select,
+a {
+    -webkit-tap-highlight-color: transparent;
+}
+
 /* Keyframes */
 
 @keyframes loading {
