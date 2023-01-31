@@ -55,7 +55,6 @@ const Suggestion = styled.button`
 function AddExpense() {
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");
-  const [description, setDesc] = useState("");
   const [suggestions, setSuggestions] = useState<ItemsRecord[]>([]);
   const [suggestionToggle, setSuggestionsToggle] = useState(true);
 
@@ -72,7 +71,7 @@ function AddExpense() {
       set,
       amount: parseFloat(amount),
       name,
-      description,
+      description: "", // sending empty description just for now
     };
     try {
       // store the expense in the Items collection asynchronously
@@ -164,13 +163,6 @@ function AddExpense() {
             name="amount"
             value={amount}
             onChange={handleChange}
-          />
-        </AddExpenseField>
-        <AddExpenseField label="Description" optional>
-          <AddExpenseTextField
-            name="description"
-            value={description}
-            onChange={(e) => setDesc(e.target.value)}
           />
         </AddExpenseField>
       </Form>

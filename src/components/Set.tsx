@@ -52,6 +52,31 @@ const DeleteButton = styled(DangerIconButton)``;
 
 const HomeButton = styled(PrimaryIconButton)``;
 
+const ExpenseBar = styled.div`
+  height: 8px;
+  background-color: ${Colors.bg};
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+`;
+
+interface IExpenseProgressProps {
+  total: number;
+  remaining: number;
+}
+
+const ExpenseProgress = styled.div(
+  ({ total, remaining }: IExpenseProgressProps) => {
+    const width = 100 - (100 / total) * remaining;
+    return {
+      height: "100%",
+      width: `${width}vw`,
+      backgroundColor: Colors.success,
+    };
+  }
+);
+
 function Set() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -195,6 +220,16 @@ function Set() {
         )}
       </ListContainer>
       <Tray>
+        {totalExpense !== 0 &&
+          totalRemaining !== 0 &&
+          totalExpense !== totalRemaining && (
+            <ExpenseBar>
+              <ExpenseProgress
+                total={totalExpense}
+                remaining={totalRemaining}
+              />
+            </ExpenseBar>
+          )}
         <Info>
           {totalRemaining !== totalExpense && totalRemaining !== 0 && (
             <>
