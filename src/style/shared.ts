@@ -125,14 +125,18 @@ export const DangerIconButton = styled(IconButton)`
   }
 `;
 
-export const Greeting = styled.h1`
+export const Greeting = styled.section`
   font-size: ${Sizes.large};
   color: ${Colors.secondaryText};
   font-weight: normal;
-  display: block;
   position: relative;
 
-  & > strong {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+
+  & strong {
     color: ${Colors.text};
   }
 `;

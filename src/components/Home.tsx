@@ -58,10 +58,9 @@ const AddButton = styled(PrimaryButton)`
   flex: 0.6;
 `;
 
-const LogoutButton = styled(DangerIconButton)`
-  position: absolute;
-  right: -64px;
-  top: -10px;
+const LogoutButton = styled(DangerIconButton)``;
+const InvisibleButton = styled(DangerIconButton)`
+  visibility: hidden;
 `;
 
 function Home() {
@@ -117,7 +116,10 @@ function Home() {
   return (
     <HomeContainer>
       <Greeting>
-        Hello <strong>{name}</strong>{" "}
+        <InvisibleButton />
+        <span>
+          Hello <strong>{name}</strong>
+        </span>
         <LogoutButton onClick={logout}>
           <LogoutIcon />
         </LogoutButton>

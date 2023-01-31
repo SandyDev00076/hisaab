@@ -15,29 +15,18 @@ import {
   ListContainer,
   PrimaryButton,
   PrimaryIconButton,
-  SecondaryButton,
   Tray,
 } from "../style/shared";
 import { ExpensesResponse, SetsResponse } from "../types/pocketbase-types";
 import ExpenseTile from "./ExpenseTile";
 import { ReactComponent as DeleteIcon } from "../assets/delete.svg";
 import { ReactComponent as CloseIcon } from "../assets/close.svg";
+import { ReactComponent as HomeIcon } from "../assets/home.svg";
 import { Colors, Sizes } from "../style/variables";
 import { useLoading } from "../data/loadingContext";
 
 const SetContainer = styled(Container)`
   gap: 32px;
-`;
-
-const Actions = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  width: 100%;
-
-  & > button {
-    flex: 1;
-  }
 `;
 
 const AddButton = styled(PrimaryButton)`
@@ -58,6 +47,10 @@ const DeleteConfirmation = styled.div`
 const RemainingExpense = styled(Expense)`
   margin-bottom: 20px;
 `;
+
+const DeleteButton = styled(DangerIconButton)``;
+
+const HomeButton = styled(PrimaryIconButton)``;
 
 function Set() {
   const { id } = useParams();
@@ -161,7 +154,6 @@ function Set() {
 
   return (
     <SetContainer>
-      <Greeting>Set: {set && <strong>{set.name}</strong>}</Greeting>
       {deleteConfirmation ? (
         <DeleteConfirmation>
           <h5>Sure ?</h5>
@@ -174,12 +166,15 @@ function Set() {
           </PrimaryIconButton>
         </DeleteConfirmation>
       ) : (
-        <Actions>
-          <SecondaryButton onClick={goToHome}>Home</SecondaryButton>
-          <DangerButton onClick={() => showDeleteConfirmation(true)}>
-            Delete
-          </DangerButton>
-        </Actions>
+        <Greeting>
+          <HomeButton onClick={goToHome}>
+            <HomeIcon />
+          </HomeButton>
+          <span>Set: {set && <strong>{set.name}</strong>}</span>
+          <DeleteButton onClick={() => showDeleteConfirmation(true)}>
+            <DeleteIcon />
+          </DeleteButton>
+        </Greeting>
       )}
       <ListContainer>
         <h3>
