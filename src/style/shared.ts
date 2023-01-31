@@ -3,7 +3,7 @@ import { Colors, Sizes } from "./variables";
 import BasicButton from "../components/Button";
 
 export const Container = styled.section`
-  padding: 64px 32px;
+  padding: 32px;
   display: flex;
   flex-direction: column;
   align-items: center;

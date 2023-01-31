@@ -12,7 +12,8 @@ export const Colors = {
     danger: "#b44e39",
     dangerLight5: "#d28170",
     accent: "#FFD6BA",
-    white: "#fff"
+    white: "#fff",
+    success: "#90EE90"
 }
 
 export const Sizes = {

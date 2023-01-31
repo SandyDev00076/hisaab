@@ -37,6 +37,7 @@ export type ExpensesRecord = {
 	amount?: number
 	name: string
 	description?: string
+	done?: boolean
 }
 
 export type ItemsRecord = {

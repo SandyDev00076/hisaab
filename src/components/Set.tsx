@@ -55,6 +55,10 @@ const DeleteConfirmation = styled.div`
   }
 `;
 
+const RemainingExpense = styled(Expense)`
+  margin-bottom: 20px;
+`;
+
 function Set() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -109,6 +113,17 @@ function Set() {
       total += expense.amount;
     });
     updateSet(total);
+    return total;
+  }, [expenses]);
+
+  const totalRemaining = useMemo(() => {
+    let total = 0;
+    expenses
+      .filter((expense) => !expense.done)
+      .forEach((expense) => {
+        if (!expense.amount) return;
+        total += expense.amount;
+      });
     return total;
   }, [expenses]);
 
@@ -181,11 +196,17 @@ function Set() {
             ))}
           </List>
         ) : (
-          <EmptyUI>Add one to get started</EmptyUI>
+          <EmptyUI>Add one expense to get started</EmptyUI>
         )}
       </ListContainer>
       <Tray>
         <Info>
+          {totalRemaining !== totalExpense && totalRemaining !== 0 && (
+            <>
+              <h4>Remaining</h4>
+              <RemainingExpense>{totalRemaining.toFixed(2)}</RemainingExpense>
+            </>
+          )}
           <h4>Total</h4>
           <Expense>{totalExpense.toFixed(2)}</Expense>
         </Info>

@@ -1,5 +1,5 @@
-import styled, { StyledComponent } from "@emotion/styled";
-import React, { LegacyRef, useEffect, useRef, useState } from "react";
+import styled from "@emotion/styled";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import pb from "../lib/pocketbase";
 import {

@@ -5,7 +5,9 @@ import { Colors, Sizes } from "../style/variables";
 import { ExpensesResponse } from "../types/pocketbase-types";
 import { debounce, handleStringAsDecimal } from "../utils";
 import { ReactComponent as DeleteIcon } from "../assets/delete.svg";
-import { DangerIconButton } from "../style/shared";
+import { ReactComponent as DoneIcon } from "../assets/done.svg";
+import { ReactComponent as CloseIcon } from "../assets/close.svg";
+import { DangerIconButton, PrimaryIconButton } from "../style/shared";
 import Button from "./Button";
 
 interface IProps {
@@ -17,28 +19,39 @@ const Container = styled.div`
   position: relative;
 `;
 
-const DeleteButton = styled(DangerIconButton)`
-  position: absolute;
-  right: 10px;
-  top: 12px;
-  z-index: 1;
-`;
+const DeleteButton = styled(DangerIconButton)``;
 
-const ExpenseItem = styled(Button)`
-  position: relative;
-  z-index: 2;
-  background-color: ${Colors.bg};
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  padding: 16px;
+const DoneButton = styled(PrimaryIconButton)``;
+
+const Actions = styled.div`
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  z-index: 1;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  outline: none;
-  border: none;
-  transition: translate ease-in-out 250ms;
+  gap: 16px;
 `;
+
+interface IExpenseItemProps {
+  done?: boolean;
+}
+
+const ExpenseItem = styled(Button)(({ done }: IExpenseItemProps) => ({
+  position: "relative",
+  zIndex: 2,
+  backgroundColor: Colors.bg,
+  width: "100%",
+  borderRadius: "10px",
+  margin: !done ? "4px 2px 10px 2px" : "0 0 6px 0",
+  padding: "16px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  outline: "none",
+  border: done ? `2px solid ${Colors.success}` : "none",
+  transition: "translate ease-in-out 250ms",
+}));
 
 const Amount = styled.input`
   color: ${Colors.accent};
@@ -54,12 +67,17 @@ const Amount = styled.input`
   text-align: end;
 `;
 
-const Name = styled.div`
-  font-size: ${Sizes.medium};
-  color: ${Colors.text};
-  text-align: start;
-  word-break: break-all;
-`;
+interface INameProps {
+  done?: boolean;
+}
+
+const Name = styled.div(({ done }: INameProps) => ({
+  fontSize: Sizes.medium,
+  color: Colors.text,
+  textAlign: "start",
+  wordBreak: "break-all",
+  textDecoration: done ? "line-through" : "none",
+}));
 
 function ExpenseTile({ expense, onUpdate }: IProps) {
   const amountRef = useRef<HTMLInputElement>();
@@ -131,9 +149,23 @@ function ExpenseTile({ expense, onUpdate }: IProps) {
     if (newVal) setAmount(newVal);
   }
 
+  async function toggleDone() {
+    const data = {
+      ...expense,
+      done: !expense.done,
+    };
+    try {
+      await pb.collection("expenses").update(expense.id, data);
+      onUpdate();
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   return (
     <Container ref={containerRef as LegacyRef<HTMLDivElement>}>
       <ExpenseItem
+        done={expense.done}
         onClick={(e) => {
           if (e.target instanceof Node && amountRef.current?.contains(e.target))
             return;
@@ -141,7 +173,7 @@ function ExpenseTile({ expense, onUpdate }: IProps) {
         }}
         ref={expenseItemRef}
       >
-        <Name>{expense.name}</Name>
+        <Name done={expense.done}>{expense.name}</Name>
         <Amount
           value={amount}
           onChange={handleChange}
@@ -149,9 +181,14 @@ function ExpenseTile({ expense, onUpdate }: IProps) {
           inputMode="numeric"
         />
       </ExpenseItem>
-      <DeleteButton onClick={deleteExpense}>
-        <DeleteIcon />
-      </DeleteButton>
+      <Actions>
+        <DeleteButton onClick={deleteExpense}>
+          <DeleteIcon />
+        </DeleteButton>
+        <DoneButton onClick={toggleDone}>
+          {!expense.done ? <DoneIcon /> : <CloseIcon />}
+        </DoneButton>
+      </Actions>
     </Container>
   );
 }
