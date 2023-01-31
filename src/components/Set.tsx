@@ -4,7 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import pb from "../lib/pocketbase";
 import {
   Container,
-  DangerButton,
   DangerIconButton,
   EmptyUI,
   Expense,
