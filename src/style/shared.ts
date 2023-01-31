@@ -162,7 +162,7 @@ export const Tray = styled.footer`
 export const ListContainer = styled.section`
   width: 100%;
   & > h3 {
-    color: ${Colors.text};
+    color: ${Colors.secondaryText};
     font-size: ${Sizes.medium};
     margin-bottom: 16px;
     text-align: center;
