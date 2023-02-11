@@ -32,7 +32,7 @@ export function handleStringAsDecimal(val: string) {
  * @param locale locale according to which number needs to be compacted
  * @returns Formatter using which numbers can be compacted
  */
-export function formatCompact(locale = "en-IN") {
+export function formatCompact(locale = "en-US") {
   return new Intl.NumberFormat(locale, {
     notation: "compact",
   });
