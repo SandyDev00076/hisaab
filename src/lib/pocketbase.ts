@@ -1,6 +1,6 @@
 import PocketBase from "pocketbase";
 
-const pbURL = import.meta.env.PB_URL;
+const pbURL = import.meta.env.VITE_PB_URL;
 
 if (!pbURL) {
   // environment variable missing
