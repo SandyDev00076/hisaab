@@ -3,7 +3,7 @@ import PocketBase from "pocketbase";
 const pbURL = import.meta.env.VITE_PB_URL;
 
 if (!pbURL) {
-  // environment variable missing
+  // if environment variable is missing
   throw new Error("Not able to fetch Pocket base URL");
 }
 
