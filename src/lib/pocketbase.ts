@@ -1,5 +1,11 @@
-import PocketBase from 'pocketbase';
+import PocketBase from "pocketbase";
 
-const pb = new PocketBase('http://127.0.0.1:8090');
+const pbURL = import.meta.env.PB_URL;
+
+if (!pbURL) {
+  throw new Error("Not able to fetch Pocket base URL");
+}
+
+const pb = new PocketBase(pbURL);
 
 export default pb;

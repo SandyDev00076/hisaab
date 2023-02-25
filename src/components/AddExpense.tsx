@@ -17,6 +17,8 @@ import { ItemsRecord } from "../types/pocketbase-types";
 import { debounce, handleStringAsDecimal } from "../utils";
 import Field from "./Field";
 
+const SUGGESTIONS_DELAY = 1000; // delay for showing suggestions on Expense name
+
 const AddExpenseContainer = styled(Container)`
   gap: 32px;
 `;
@@ -130,7 +132,7 @@ function AddExpense() {
       } catch (e) {
         console.error(e);
       }
-    }, 500);
+    }, SUGGESTIONS_DELAY);
     fetchSuggestions();
   }, [name]);
 
